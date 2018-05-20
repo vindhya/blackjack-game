@@ -212,7 +212,7 @@ function checkNatural() {
 }
 
 // removes any counts over 21 from the array
-function checkBust(countArray) {
+function removeBust(countArray) {
 	const nonBusted = countArray.filter(value => value <= 21);
 	return nonBusted;
 }
@@ -221,12 +221,67 @@ function hitMe(hand) {
 	hand.push(cards.pop()); // add another card to the hand from the deck
 	console.log('new hand', hand);
 
-	const count = checkBust(grabCount(hand)); // recalculate the counts and remove any counts that are over 21
+	const count = removeBust(grabCount(hand)); // recalculate the counts and remove any counts that are over 21
 	console.log('new count', count);
 
 	if (count.length === 0) {
 		console.log('sorry, u done and busted, son');
 		// later: remove ability to play further from UI
+	}
+}
+
+// add a card to the hand passed in - used for the dealer's hit
+function dealerHit(hand) {
+	hand.push(cards.pop());
+	console.log('new dealer', hand);
+	return hand;
+}
+
+// check if the count array passed in has a 21 in it
+function check21(countArray) {
+	let is21 = false;
+
+	countArray.forEach(item => {
+		if (item === 21) is21 = true;
+	});
+
+	return is21;
+}
+
+// return the highest count value in the array
+function highestCount(countArray) {
+	const highest = countArray.reduce((highest, next) => (next > highest) ? next : highest, 0);
+	console.log('highest', highest);
+	return highest;
+}
+
+// when the player decides to stand, begin the dealer play logic
+function dealerPlay() {
+	const dealerCount = removeBust(grabCount(dealerHand));
+	const playerCount = removeBust(grabCount(playerHand));
+	const dealer21 = check21(dealerCount);
+	const player21 = check21(playerCount);
+	const dealerHighest = highestCount(dealerCount);
+	const playerHighest = highestCount(playerCount);
+
+	if (dealerCount.length === 0) { // the dealer is over 21
+		console.log('dealer busted! you win!');
+	} else if (dealer21) { // the dealer has a blackjack
+		if (player21) { // and the player has a blackjack
+			console.log(`it's a tie!`);
+		} else { // dealer has a blackjack and the player *doesn't* have a blackjcak
+			console.log(`sorry, dealer has 21 and wins :(`);
+		}
+	} else if (dealerHighest >= 17) { // dealer can't take anymore cards if total is equal or over 17
+		if (playerHighest > dealerHighest) {
+			console.log(`you win! you have ${playerHighest} and the dealer has ${dealerHighest}`);
+		} else if (dealerHighest > playerHighest) {
+			console.log(`sorry, dealer wins :( you have ${playerHighest} and the dealer has ${dealerHighest}`);
+		} else {
+			console.log(`it's a tie!`);
+		}
+	} else {
+		dealerPlay(dealerHit(dealerHand));
 	}
 }
 
