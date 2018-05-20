@@ -1,40 +1,5 @@
 const playerHand = []; // array to hold the human player's cards
 const dealerHand = []; // array to hold the computer dealer's cards
-const testHand = [
-	{
-		value: 3,
-		type: 'three',
-		suit: 'spades'
-	},
-	{
-		value: 5,
-		type: 'five',
-		suit: 'clubs'
-	},
-	{
-		altValue: 11,
-		value: 1,
-		type: 'ace',
-		suit: 'clubs'
-	},
-	// {
-	// 	altValue: 11,
-	// 	value: 1,
-	// 	type: 'ace',
-	// 	suit: 'hearts'
-	// },
-	{
-		value: 4,
-		type: 'five',
-		suit: 'clubs'
-	},
-	{
-		altValue: 11,
-		value: 1,
-		type: 'ace',
-		suit: 'diamonds'
-	}
-];
 
 // creating an array of objects where each item object represents a card - 6 decks
 let cards = (function() {
@@ -218,10 +183,10 @@ function removeBust(countArray) {
 }
 
 function hitMe(hand) {
-	hand.push(cards.pop()); // add another card to the hand from the deck
-	console.log('new hand', hand);
+	playerHand.push(cards.pop()); // add another card to the player's hand from the deck
+	console.log('new playerHand', playerHand);
 
-	const count = removeBust(grabCount(hand)); // recalculate the counts and remove any counts that are over 21
+	const count = removeBust(grabCount(playerHand)); // recalculate the counts and remove any counts that are over 21
 	console.log('new count', count);
 
 	if (count.length === 0) {
@@ -277,7 +242,7 @@ function dealerPlay() {
 			console.log(`you win! you have ${playerHighest} and the dealer has ${dealerHighest}`);
 		} else if (dealerHighest > playerHighest) {
 			console.log(`sorry, dealer wins :( you have ${playerHighest} and the dealer has ${dealerHighest}`);
-		} else {
+		} else { // playerHighest === dealerHighest
 			console.log(`it's a tie!`);
 		}
 	} else {
@@ -288,10 +253,6 @@ function dealerPlay() {
 cards = shuffle(cards);
 initialDeal();
 checkNatural();
+
 console.log('playerHand', playerHand);
 console.log('dealerHand', dealerHand);
-
-// questions
-// 1. should my functions be pure? pass in and return the cards array instead of mutating it - yes, because there is a set number of cards in this and it's not going to grow
-// 2. how to lay out the flow - there are a lot of things that have to happen one after another at the beginning - this looks good
-// 3. am i commenting too much? - no, not at the beginning
