@@ -11,7 +11,37 @@
 
 <body>
 
-	<h1>Let's play Blackjack!</h1>
+	<h1>Let's Play Blackjack!</h1>
+
+	<div class="container">
+
+		<div class="play-section dealer">
+			<div>
+				<h2>Dealer cards:</h2>
+			</div>
+			<div class="card-display">
+				<div id="dealer-card1"></div>
+				<div id="dealer-card2">
+					<img src="images/card-back.svg" alt="face down card">
+				</div>
+			</div>
+		</div>
+
+		<div class="play-section player">
+			<div>
+				<h2>Your cards:</h2>
+				<br>
+				<button id="hit-button">Hit</button>
+				<br>
+				<button id="stand-button">Stand</button>
+			</div>
+			<div class="card-display">
+				<div id="player-card1"></div>
+				<div id="player-card2"></div>
+			</div>
+		</div>
+
+	</div>
 
 	<p>Card images sourced from
 		<a href="https://code.google.com/archive/p/vector-playing-cards/">Google Code</a>.

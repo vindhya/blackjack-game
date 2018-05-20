@@ -252,6 +252,9 @@ function dealerPlay() {
 
 cards = shuffle(cards);
 initialDeal();
+$('#dealer-card1').append(`<img src="${dealerHand[0].image}">`);
+$('#player-card1').append(`<img src="${playerHand[0].image}">`);
+$('#player-card2').append(`<img src="${playerHand[1].image}">`);
 checkNatural();
 
 console.log('playerHand', playerHand);

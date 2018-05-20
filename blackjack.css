@@ -1,0 +1,28 @@
+* {
+	font-size: 10px;
+}
+
+body, p, a {
+	font-size: 1.6rem;
+}
+
+h1 {
+	font-size: 3.5rem;
+}
+
+h2 {
+	font-size: 2.5rem;
+}
+
+.card-display img {
+	height: 100%;
+	/* width: auto; */
+}
+
+.play-section {
+	height: 400px;
+}
+
+.card-display div {
+	display: inline-block;
+}
