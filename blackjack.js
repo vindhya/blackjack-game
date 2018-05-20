@@ -36,7 +36,7 @@ let cards = (function() {
 						value: card.value,
 						altValue: card.altValue,
 						suit: suit,
-						image: `images/SVG-cards-1.3/${card.type}_of_${suit}.svg`
+						image: `images/PNG-cards-1.3/${card.type}_of_${suit}.png`
 					}
 				);
 			});
