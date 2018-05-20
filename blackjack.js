@@ -211,6 +211,25 @@ function checkNatural() {
 	}
 }
 
+// removes any counts over 21 from the array
+function checkBust(countArray) {
+	const nonBusted = countArray.filter(value => value <= 21);
+	return nonBusted;
+}
+
+function hitMe(hand) {
+	hand.push(cards.pop()); // add another card to the hand from the deck
+	console.log('new hand', hand);
+
+	const count = checkBust(grabCount(hand)); // recalculate the counts and remove any counts that are over 21
+	console.log('new count', count);
+
+	if (count.length === 0) {
+		console.log('sorry, u done and busted, son');
+		// later: remove ability to play further from UI
+	}
+}
+
 cards = shuffle(cards);
 initialDeal();
 checkNatural();
