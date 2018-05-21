@@ -1,26 +1,49 @@
-* {
-	font-size: 10px;
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
 }
 
-body, p, a {
+html {
+	font-size: 62.5%;
+}
+
+body {
 	font-size: 1.6rem;
+	font-family: sans-serif;
+	margin: 2rem;
+
+	box-sizing: border-box;
 }
 
 h1 {
 	font-size: 3.5rem;
+	margin: 1rem 0;
+	text-align: center;
+}
+
+.container {
+	display: grid;
+}
+
+.play-section {
+	margin-bottom: 2rem;
 }
 
 h2 {
 	font-size: 2.5rem;
+	margin: 0;
+}
+
+button {
+	height: 2rem;
 }
 
 .card-display img {
-	height: 100%;
+	height: 20rem;
 	/* width: auto; */
-}
-
-.play-section {
-	height: 400px;
 }
 
 .card-display div {

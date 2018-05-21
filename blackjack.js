@@ -160,16 +160,19 @@ function grabCount(hand) {
 
 // check if there's a natural blackjack in either the player's hand and the dealer's hand upon the initial deal
 function checkNatural() {
+	const player21 = check21(grabCount(playerHand));
+	const dealer21 = check21(grabCount(dealerHand));
+
 	// check if the player has a natural blackjack
-	if (grabCount(playerHand)[0] === 21 || grabCount(playerHand)[1] === 21) {
+	if (player21) {
 		// check if the dealer has a natural blackjack
-		if (grabCount(dealerHand)[0] === 21 || grabCount(dealerHand)[1] === 21) {
+		if (dealer21) {
 			console.log(`it's a tie! you both have a natural`);
 		} else {
 			console.log('you win!');
 		}
 		// if only the dealer has a natural:
-	} else if (grabCount(dealerHand)[0] === 21 || grabCount(dealerHand)[1] === 21) {
+	} else if (dealer21) {
 		console.log('sorry, dealer wins :(');
 	} else { // no naturals, so the regular flow of the game begins - hit, stand, etc
 		console.log(`let's keep playing!`);
