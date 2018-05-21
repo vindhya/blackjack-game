@@ -24,17 +24,17 @@ h1 {
 	text-align: center;
 }
 
+h2 {
+	font-size: 2.5rem;
+	margin: 0;
+}
+
 .container {
 	display: grid;
 }
 
 .play-section {
 	margin-bottom: 2rem;
-}
-
-h2 {
-	font-size: 2.5rem;
-	margin: 0;
 }
 
 button {
