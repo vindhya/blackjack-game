@@ -168,12 +168,15 @@ function checkNatural() {
 		// check if the dealer has a natural blackjack
 		if (dealer21) {
 			console.log(`it's a tie! you both have a natural`);
+			$('.message').text(`It's a tie! You both have a natural blackjack!`);
 		} else {
 			console.log('you win!');
+			$('.message').text(`You win! You have a natural blackjack!`);
 		}
 		// if only the dealer has a natural:
 	} else if (dealer21) {
 		console.log('sorry, dealer wins :(');
+		$('.message').text(`Sorry, Dealer wins with a natural blackjack :(`);
 	} else { // no naturals, so the regular flow of the game begins - hit, stand, etc
 		console.log(`let's keep playing!`);
 	}
@@ -185,7 +188,7 @@ function removeBust(countArray) {
 	return nonBusted;
 }
 
-function hitMe(hand) {
+function playerHit() {
 	playerHand.push(cards.pop()); // add another card to the player's hand from the deck
 	console.log('new playerHand', playerHand);
 
@@ -194,7 +197,9 @@ function hitMe(hand) {
 
 	if (count.length === 0) {
 		console.log('sorry, u done and busted, son');
-		// later: remove ability to play further from UI
+		$('#hit-button').hide();
+		$('#stand-button').hide();
+		$('.message').text(`Game over. Your total is over 21.`);
 	}
 }
 
@@ -232,6 +237,8 @@ function dealerPlay() {
 	const dealerHighest = highestCount(dealerCount);
 	const playerHighest = highestCount(playerCount);
 
+	$('#dealer-card2').html(`<img src="${dealerHand[1].image}" alt="${dealerHand[1].type} of ${dealerHand[1].suit}">`);
+
 	if (dealerCount.length === 0) { // the dealer is over 21
 		console.log('dealer busted! you win!');
 	} else if (dealer21) { // the dealer has a blackjack
@@ -255,10 +262,12 @@ function dealerPlay() {
 
 cards = shuffle(cards);
 initialDeal();
-$('#dealer-card1').append(`<img src="${dealerHand[0].image}">`);
-$('#player-card1').append(`<img src="${playerHand[0].image}">`);
-$('#player-card2').append(`<img src="${playerHand[1].image}">`);
+$('#dealer-card1').append(`<img src="${dealerHand[0].image}" alt="${dealerHand[0].type} of ${dealerHand[0].suit}">`);
+$('#player-card1').append(`<img src="${playerHand[0].image}" alt="${playerHand[0].type} of ${playerHand[0].suit}">`);
+$('#player-card2').append(`<img src="${playerHand[1].image}" alt="${playerHand[1].type} of ${playerHand[1].suit}">`);
 checkNatural();
+$('#hit-button').click(playerHit);
+$('#stand-button').click(dealerPlay);
 
 console.log('playerHand', playerHand);
 console.log('dealerHand', dealerHand);

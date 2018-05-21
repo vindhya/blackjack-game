@@ -37,10 +37,6 @@ h2 {
 	margin-bottom: 2rem;
 }
 
-button {
-	height: 2rem;
-}
-
 .card-display img {
 	height: 20rem;
 	/* width: auto; */
@@ -48,4 +44,8 @@ button {
 
 .card-display div {
 	display: inline-block;
+}
+
+footer {
+	font-size: 1.2rem;
 }
