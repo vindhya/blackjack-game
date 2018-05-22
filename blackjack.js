@@ -1,5 +1,6 @@
 const playerHand = []; // array to hold the human player's cards
 const dealerHand = []; // array to hold the computer dealer's cards
+const playAgainText = `<a href="blackjack.html">Play again?</a>`;
 
 // creating an array of objects where each item object represents a card - 6 decks
 let cards = (function() {
@@ -168,15 +169,15 @@ function checkNatural() {
 		// check if the dealer has a natural blackjack
 		if (dealer21) {
 			console.log(`it's a tie! you both have a natural`);
-			$('.message').text(`It's a tie! You both have a natural blackjack!`);
+			$('.message').html(`It's a tie! You both have a natural blackjack! ${playAgainText}`);
 		} else {
 			console.log('you win!');
-			$('.message').text(`You win! You have a natural blackjack!`);
+			$('.message').html(`You win! You have a natural blackjack! ${playAgainText}`);
 		}
 		// if only the dealer has a natural:
 	} else if (dealer21) {
 		console.log('sorry, dealer wins :(');
-		$('.message').text(`Sorry, the dealer wins with a natural blackjack :(`);
+		$('.message').html(`Sorry, the dealer wins with a natural blackjack :( ${playAgainText}`);
 	} else { // no naturals, so the regular flow of the game begins - hit, stand, etc
 		console.log(`let's keep playing!`);
 	}
@@ -188,8 +189,20 @@ function removeBust(countArray) {
 	return nonBusted;
 }
 
+// displays the new card dealt on the page
+function displayNewCard(player, card) {
+	$(`.${player} .card-display`).append(
+		`<div class="${player}-card">
+		 	<img src="${card.image}" alt="${card.type} of ${card.suit}">
+		 </div>`
+	);
+}
+
 function playerHit() {
-	playerHand.push(cards.pop()); // add another card to the player's hand from the deck
+	const newCard = cards.pop();
+	playerHand.push(newCard); // add another card to the player's hand from the deck
+	displayNewCard('player', newCard);
+
 	console.log('new playerHand', playerHand);
 
 	const count = removeBust(grabCount(playerHand)); // recalculate the counts and remove any counts that are over 21
@@ -199,14 +212,18 @@ function playerHit() {
 		console.log('sorry, u done and busted, son');
 		$('#hit-button').hide();
 		$('#stand-button').hide();
-		$('.message').text(`Game over. Your total is over 21.`);
+		$('.message').html(`Game over. Your total is over 21. ${playAgainText}`);
 	}
 }
 
 // add a card to the hand passed in - used for the dealer's hit
 function dealerHit(hand) {
-	hand.push(cards.pop());
+	const newCard = cards.pop();
+	hand.push(newCard);
+	displayNewCard('dealer', newCard);
+
 	console.log('new dealer', hand);
+
 	return hand;
 }
 
@@ -241,25 +258,25 @@ function dealerPlay() {
 
 	if (dealerCount.length === 0) { // the dealer is over 21
 		console.log('dealer busted! you win!');
-		$('.message').text(`You win! The dealer went bust!`);
+		$('.message').html(`You win! The dealer went bust! ${playAgainText}`);
 	} else if (dealer21) { // the dealer has a blackjack
 		if (player21) { // and the player has a blackjack
 			console.log(`it's a tie!`);
-			$('.message').text(`It's a tie! You both have ${playerHighest}. Refresh the page to play again :)`);
+			$('.message').html(`It's a tie! You both have ${playerHighest}. ${playAgainText}`);
 		} else { // dealer has a blackjack and the player *doesn't* have a blackjcak
 			console.log(`sorry, dealer has 21 and wins :(`);
-			$('.message').text(`Sorry, the dealer has 21 and wins :(`);
+			$('.message').html(`Sorry, the dealer has 21 and wins :( ${playAgainText}`);
 		}
 	} else if (dealerHighest >= 17) { // dealer can't take anymore cards if total is equal or over 17
 		if (playerHighest > dealerHighest) {
 			console.log(`you win! you have ${playerHighest} and the dealer has ${dealerHighest}`);
-			$('.message').text(`You win! You have ${playerHighest} and the dealer has ${dealerHighest}`);
+			$('.message').html(`You win! You have ${playerHighest} and the dealer has ${dealerHighest}. ${playAgainText}`);
 		} else if (dealerHighest > playerHighest) {
 			console.log(`sorry, dealer wins :( you have ${playerHighest} and the dealer has ${dealerHighest}`);
-			$('.message').text(`Sorry, dealer wins :( You have ${playerHighest} and the dealer has ${dealerHighest}`);
+			$('.message').html(`Sorry, dealer wins :( You have ${playerHighest} and the dealer has ${dealerHighest}. ${playAgainText}`);
 		} else { // playerHighest === dealerHighest
 			console.log(`it's a tie!`);
-			$('.message').text(`It's a tie! You both have ${playerHighest}. Refresh the page to play again :)`);
+			$('.message').html(`It's a tie! You both have ${playerHighest}. ${playAgainText}`);
 		}
 	} else {
 		dealerPlay(dealerHit(dealerHand));
