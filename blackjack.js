@@ -176,7 +176,7 @@ function checkNatural() {
 		// if only the dealer has a natural:
 	} else if (dealer21) {
 		console.log('sorry, dealer wins :(');
-		$('.message').text(`Sorry, Dealer wins with a natural blackjack :(`);
+		$('.message').text(`Sorry, the dealer wins with a natural blackjack :(`);
 	} else { // no naturals, so the regular flow of the game begins - hit, stand, etc
 		console.log(`let's keep playing!`);
 	}
@@ -241,19 +241,25 @@ function dealerPlay() {
 
 	if (dealerCount.length === 0) { // the dealer is over 21
 		console.log('dealer busted! you win!');
+		$('.message').text(`You win! The dealer went bust!`);
 	} else if (dealer21) { // the dealer has a blackjack
 		if (player21) { // and the player has a blackjack
 			console.log(`it's a tie!`);
+			$('.message').text(`It's a tie! You both have ${playerHighest}. Refresh the page to play again :)`);
 		} else { // dealer has a blackjack and the player *doesn't* have a blackjcak
 			console.log(`sorry, dealer has 21 and wins :(`);
+			$('.message').text(`Sorry, the dealer has 21 and wins :(`);
 		}
 	} else if (dealerHighest >= 17) { // dealer can't take anymore cards if total is equal or over 17
 		if (playerHighest > dealerHighest) {
 			console.log(`you win! you have ${playerHighest} and the dealer has ${dealerHighest}`);
+			$('.message').text(`You win! You have ${playerHighest} and the dealer has ${dealerHighest}`);
 		} else if (dealerHighest > playerHighest) {
 			console.log(`sorry, dealer wins :( you have ${playerHighest} and the dealer has ${dealerHighest}`);
+			$('.message').text(`Sorry, dealer wins :( You have ${playerHighest} and the dealer has ${dealerHighest}`);
 		} else { // playerHighest === dealerHighest
 			console.log(`it's a tie!`);
+			$('.message').text(`It's a tie! You both have ${playerHighest}. Refresh the page to play again :)`);
 		}
 	} else {
 		dealerPlay(dealerHit(dealerHand));
