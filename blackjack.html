@@ -15,25 +15,33 @@
 
 	<div class="container">
 
-		<div class="message"></div>
+		<div class="interaction">
+			<div class="play-buttons">
+				<button id="hit-button">Hit</button>
+				<button id="stand-button">Stand</button>
+			</div>
+			<div class="message"></div>
+		</div>
+
 
 		<div class="play-section player">
 			<div>
-				<h3>Your hand:</h3>
+				<h2>
+					Your hand (count:
+					<span id="count-num"></span>)
+				</h2>
 			</div>
 			<div class="card-display">
 				<div id="player-card1"></div>
 				<div id="player-card2"></div>
 			</div>
-			<div class="play-buttons">
-				<button id="hit-button">Hit</button>
-				<button id="stand-button">Stand</button>
-			</div>
 		</div>
 
 		<div class="play-section dealer">
 			<div>
-				<h3>Dealer hand:</h3>
+				<h2>Dealer hand
+					<span id="count-num-dealer"></span>
+				</h2>
 			</div>
 			<div class="card-display">
 				<div id="dealer-card1"></div>

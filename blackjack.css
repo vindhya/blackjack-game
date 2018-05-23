@@ -20,21 +20,33 @@ body {
 
 h1 {
 	font-size: 3.5rem;
-	margin: 1rem 0;
+	margin-top: 1rem;
 	text-align: center;
 }
 
 h2 {
-	font-size: 2.5rem;
-	margin: 0;
+	font-size: 2rem;
+	margin-bottom: .5rem;
 }
 
 .container {
 	display: grid;
 }
 
+.interaction {
+	display: flex;
+	align-items: center;
+	height: 7rem;
+	font-size: 1.8rem;
+}
+
 .play-section {
 	margin-bottom: 2rem;
+}
+
+.card-display {
+	display: flex;
+	/* transition: all 1s; */
 }
 
 .card-display img {
@@ -43,9 +55,52 @@ h2 {
 }
 
 .card-display div {
-	display: inline-block;
+	/* display: inline-block; changed .card display to display: flex instead */
+	margin-right: .5rem;
+}
+
+.play-buttons button {
+	font-size: 2rem;
+	padding: .5rem;
 }
 
 footer {
 	font-size: 1.2rem;
+}
+
+#player-card1, .player-card {
+	animation: moveFromTop 1s ease-out;
+}
+
+#player-card2 {
+	animation: moveFromTop 1s ease-out 1s;
+	animation-fill-mode: backwards;
+}
+
+#dealer-card1 {
+	animation: moveFromTop 1s ease-out .5s;
+	animation-fill-mode: backwards;
+}
+
+#dealer-card2 {
+	animation: moveFromTop 1s ease-out 1.5s;
+	animation-fill-mode: backwards;
+}
+
+.dealer-card {
+	animation: moveFromTop 1s ease-out;
+}
+
+@keyframes moveFromTop {
+	0% {
+		opacity: 0;
+		transform: translateY(-10rem);
+	}
+	80% {
+		transform: translateY(1rem);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(0);
+	}
 }

@@ -1,6 +1,6 @@
 const playerHand = []; // array to hold the human player's cards
 const dealerHand = []; // array to hold the computer dealer's cards
-const playAgainText = `<a href="blackjack.html">Play again?</a>`;
+const playAgainText = `<br><a href="blackjack.html">Play again?</a>`;
 
 // creating an array of objects where each item object represents a card - 6 decks
 let cards = (function() {
@@ -69,6 +69,7 @@ Node.prototype.addChild = function(node) {
 }
 
 // shuffle the items in the cards array
+// could have used lodash or underscorejs shuffle argh!!!
 function shuffle(cards) {
 	cards.forEach((card, index) => {
 		const randomIndex = Math.floor(Math.random() * cards.length);
@@ -168,18 +169,21 @@ function checkNatural() {
 	if (player21) {
 		// check if the dealer has a natural blackjack
 		if (dealer21) {
-			console.log(`it's a tie! you both have a natural`);
+			// console.log(`it's a tie! you both have a natural`);
+			$('.play-buttons').hide();
 			$('.message').html(`It's a tie! You both have a natural blackjack! ${playAgainText}`);
 		} else {
-			console.log('you win!');
+			// console.log('you win!');
+			$('.play-buttons').hide();
 			$('.message').html(`You win! You have a natural blackjack! ${playAgainText}`);
 		}
 		// if only the dealer has a natural:
 	} else if (dealer21) {
-		console.log('sorry, dealer wins :(');
+		// console.log('sorry, dealer wins :(');
+		$('.play-buttons').hide();
 		$('.message').html(`Sorry, the dealer wins with a natural blackjack :( ${playAgainText}`);
 	} else { // no naturals, so the regular flow of the game begins - hit, stand, etc
-		console.log(`let's keep playing!`);
+		// console.log(`let's keep playing!`);
 	}
 }
 
@@ -198,20 +202,30 @@ function displayNewCard(player, card) {
 	);
 }
 
+// used for the displayed count. returns the highest count that is less than or equal to 21
+function highestLessEqual21(countArray) {
+	const highest = countArray.reduce((highest, next) => (next > highest && next <= 21) ? next : highest, 0);
+	// console.log('highest', highest);
+	return highest;
+}
+
 function playerHit() {
 	const newCard = cards.pop();
 	playerHand.push(newCard); // add another card to the player's hand from the deck
 	displayNewCard('player', newCard);
 
-	console.log('new playerHand', playerHand);
+	// console.log('new playerHand', playerHand);
 
-	const count = removeBust(grabCount(playerHand)); // recalculate the counts and remove any counts that are over 21
-	console.log('new count', count);
+	const firstCount = grabCount(playerHand);
+	$('#count-num').text(highestLessEqual21(firstCount));
+
+	const count = removeBust(firstCount); // recalculate the counts and remove any counts that are over 21
+	// console.log('new count', count);
 
 	if (count.length === 0) {
-		console.log('sorry, u done and busted, son');
-		$('#hit-button').hide();
-		$('#stand-button').hide();
+		// console.log('sorry, u done and busted, son');
+		$('.play-buttons').hide();
+		$('#count-num').text('> 21');
 		$('.message').html(`Game over. Your total is over 21. ${playAgainText}`);
 	}
 }
@@ -222,7 +236,7 @@ function dealerHit(hand) {
 	hand.push(newCard);
 	displayNewCard('dealer', newCard);
 
-	console.log('new dealer', hand);
+	// console.log('new dealer', hand);
 
 	return hand;
 }
@@ -241,7 +255,7 @@ function check21(countArray) {
 // return the highest count value in the array
 function highestCount(countArray) {
 	const highest = countArray.reduce((highest, next) => (next > highest) ? next : highest, 0);
-	console.log('highest', highest);
+	// console.log('highest', highest);
 	return highest;
 }
 
@@ -254,28 +268,31 @@ function dealerPlay() {
 	const dealerHighest = highestCount(dealerCount);
 	const playerHighest = highestCount(playerCount);
 
+	$('.play-buttons').hide();
 	$('#dealer-card2').html(`<img src="${dealerHand[1].image}" alt="${dealerHand[1].type} of ${dealerHand[1].suit}">`);
+	$('#count-num-dealer').text(`(count: ${dealerHighest})`);
 
 	if (dealerCount.length === 0) { // the dealer is over 21
-		console.log('dealer busted! you win!');
+		// console.log('dealer busted! you win!');
+		$('#count-num-dealer').text(`(count: > 21)`);
 		$('.message').html(`You win! The dealer went bust! ${playAgainText}`);
 	} else if (dealer21) { // the dealer has a blackjack
 		if (player21) { // and the player has a blackjack
-			console.log(`it's a tie!`);
+			// console.log(`it's a tie!`);
 			$('.message').html(`It's a tie! You both have ${playerHighest}. ${playAgainText}`);
 		} else { // dealer has a blackjack and the player *doesn't* have a blackjcak
-			console.log(`sorry, dealer has 21 and wins :(`);
+			// console.log(`sorry, dealer has 21 and wins :(`);
 			$('.message').html(`Sorry, the dealer has 21 and wins :( ${playAgainText}`);
 		}
 	} else if (dealerHighest >= 17) { // dealer can't take anymore cards if total is equal or over 17
 		if (playerHighest > dealerHighest) {
-			console.log(`you win! you have ${playerHighest} and the dealer has ${dealerHighest}`);
+			// console.log(`you win! you have ${playerHighest} and the dealer has ${dealerHighest}`);
 			$('.message').html(`You win! You have ${playerHighest} and the dealer has ${dealerHighest}. ${playAgainText}`);
 		} else if (dealerHighest > playerHighest) {
-			console.log(`sorry, dealer wins :( you have ${playerHighest} and the dealer has ${dealerHighest}`);
-			$('.message').html(`Sorry, dealer wins :( You have ${playerHighest} and the dealer has ${dealerHighest}. ${playAgainText}`);
+			// console.log(`sorry, dealer wins :( you have ${playerHighest} and the dealer has ${dealerHighest}`);
+			$('.message').html(`Sorry, the dealer wins :( You have ${playerHighest} and the dealer has ${dealerHighest}. ${playAgainText}`);
 		} else { // playerHighest === dealerHighest
-			console.log(`it's a tie!`);
+			// console.log(`it's a tie!`);
 			$('.message').html(`It's a tie! You both have ${playerHighest}. ${playAgainText}`);
 		}
 	} else {
@@ -288,9 +305,10 @@ initialDeal();
 $('#dealer-card1').append(`<img src="${dealerHand[0].image}" alt="${dealerHand[0].type} of ${dealerHand[0].suit}">`);
 $('#player-card1').append(`<img src="${playerHand[0].image}" alt="${playerHand[0].type} of ${playerHand[0].suit}">`);
 $('#player-card2').append(`<img src="${playerHand[1].image}" alt="${playerHand[1].type} of ${playerHand[1].suit}">`);
+$('#count-num').text(highestCount(grabCount(playerHand)));
 checkNatural();
 $('#hit-button').click(playerHit);
 $('#stand-button').click(dealerPlay);
 
-console.log('playerHand', playerHand);
-console.log('dealerHand', dealerHand);
+// console.log('playerHand', playerHand);
+// console.log('dealerHand', dealerHand);
