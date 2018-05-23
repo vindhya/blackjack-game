@@ -1,6 +1,6 @@
 const playerHand = []; // array to hold the human player's cards
 const dealerHand = []; // array to hold the computer dealer's cards
-const playAgainText = `<br><a href="blackjack.html">Play again?</a>`;
+const playAgainText = `<br><a href="index.html">Play again?</a>`;
 
 // creating an array of objects where each item object represents a card - 6 decks
 let cards = (function() {
