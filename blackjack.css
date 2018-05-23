@@ -21,7 +21,7 @@ body {
 h1 {
 	font-size: 3.5rem;
 	margin-top: 1rem;
-	text-align: center;
+	/* text-align: center; */
 }
 
 h2 {
